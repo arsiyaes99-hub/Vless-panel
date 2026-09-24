@@ -2,285 +2,841 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARSHIYA VLESS PANEL</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ARSHIYA • Server Panel</title>
 
 <style>
+:root{
+  --bg:#020514;
+  --card:#05091d;
+  --line:#26375f;
+  --blue:#2588ff;
+  --red:#ff2438;
+  --green:#18d66b;
+  --text:#eef3ff;
+  --muted:#8894b4;
+}
+
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-family:Tahoma,Arial,sans-serif;
+  box-sizing:border-box;
 }
 
 body{
-    min-height:100vh;
-    background:#080808;
-    color:#fff;
-    display:flex;
-    justify-content:center;
-    padding:25px 12px;
+  margin:0;
+  background:
+    radial-gradient(circle at 50% -10%,#101d4d 0,#020514 48%,#01030c 100%);
+  color:var(--text);
+  font-family:Tahoma,Arial,sans-serif;
+  min-height:100vh;
 }
 
-.container{
-    width:100%;
-    max-width:480px;
+.wrap{
+  max-width:720px;
+  margin:auto;
+  padding:16px 12px 35px;
+}
+
+.top{
+  border:1px solid #273861;
+  border-radius:22px;
+  background:#03071aee;
+  box-shadow:0 0 35px #001b5438;
+  overflow:hidden;
 }
 
 .header{
-    text-align:center;
-    padding:25px 10px;
+  padding:22px 20px;
+  border-bottom:1px solid #26345a;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
 
-.logo{
-    font-size:32px;
-    font-weight:bold;
-    letter-spacing:2px;
+.brand{
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:2px;
 }
 
-.logo span{
-    color:#d4af37;
-}
-
-.subtitle{
-    margin-top:8px;
-    color:#999;
-    font-size:13px;
-}
-
-.card{
-    background:#111;
-    border:1px solid #292929;
-    border-radius:18px;
-    padding:20px;
-    box-shadow:0 0 30px rgba(212,175,55,.08);
-}
-
-.title{
-    font-size:18px;
-    font-weight:bold;
-    margin-bottom:18px;
-    color:#d4af37;
-}
-
-label{
-    display:block;
-    margin:12px 0 7px;
-    color:#bbb;
-    font-size:13px;
-}
-
-input,select{
-    width:100%;
-    padding:13px;
-    border-radius:10px;
-    border:1px solid #333;
-    background:#080808;
-    color:#fff;
-    outline:none;
-    font-size:14px;
-}
-
-input:focus,select:focus{
-    border-color:#d4af37;
-}
-
-button{
-    width:100%;
-    padding:14px;
-    margin-top:15px;
-    border:0;
-    border-radius:11px;
-    cursor:pointer;
-    font-size:15px;
-    font-weight:bold;
-}
-
-.generate{
-    background:#d4af37;
-    color:#000;
-}
-
-.generate:hover{
-    background:#f0d36b;
-}
-
-.copy{
-    background:#222;
-    color:#fff;
-    border:1px solid #333;
-}
-
-.copy:hover{
-    border-color:#d4af37;
-}
-
-.result{
-    display:none;
-    margin-top:20px;
-}
-
-textarea{
-    width:100%;
-    min-height:130px;
-    resize:none;
-    padding:13px;
-    border-radius:10px;
-    border:1px solid #333;
-    background:#050505;
-    color:#ddd;
-    direction:ltr;
-    font-size:12px;
+.sub{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:7px;
 }
 
 .status{
-    text-align:center;
-    margin-top:12px;
-    color:#777;
-    font-size:12px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:#5ceaff;
+  font-size:12px;
 }
 
-.footer{
-    text-align:center;
-    color:#555;
-    font-size:11px;
-    margin-top:20px;
+.dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#25d9ff;
+  box-shadow:0 0 12px #25d9ff;
+}
+
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  padding:13px;
+  border-bottom:1px solid #26345a;
+}
+
+.tab{
+  padding:13px 6px;
+  text-align:center;
+  border:1px solid transparent;
+  border-radius:15px;
+  color:#8d97b4;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.tab.active{
+  border-color:#164f9e;
+  background:#06183c;
+  color:#49a0ff;
+  box-shadow:inset 0 0 22px #0b55a62a;
+}
+
+.card{
+  margin:14px;
+  padding:17px;
+  border:1px solid #263861;
+  border-radius:21px;
+  background:#030719;
+}
+
+.title{
+  font-size:16px;
+  font-weight:900;
+  margin-bottom:13px;
+}
+
+.title span{
+  color:#5da8ff;
+}
+
+.ports{
+  border:1px solid #263861;
+  border-radius:16px;
+  padding:14px;
+  margin-top:12px;
+}
+
+.port-title{
+  font-weight:900;
+  color:#62aaff;
+  margin-bottom:10px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+}
+
+.port{
+  border:1px solid #2a3b67;
+  background:#050a20;
+  color:#e8edfa;
+  border-radius:12px;
+  padding:11px;
+  text-align:center;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.port:hover,
+.port.selected{
+  border-color:#1677ff;
+  box-shadow:0 0 12px #1479ff3b;
+  color:#64aaff;
+}
+
+.custom{
+  width:100%;
+  margin-top:10px;
+  padding:13px;
+  border-radius:12px;
+  border:1px solid #2a3b67;
+  background:#070d24;
+  color:white;
+  outline:none;
+  text-align:center;
+}
+
+.protocol{
+  display:flex;
+  gap:10px;
+  flex-direction:column;
+}
+
+.proto{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:15px;
+  border:1px solid #293960;
+  border-radius:15px;
+  cursor:pointer;
+}
+
+.proto.active{
+  border-color:#1979ff;
+  background:#071737;
+}
+
+.proto b{
+  font-size:15px;
+}
+
+.proto small{
+  display:block;
+  color:#76819e;
+  margin-top:5px;
+}
+
+.check{
+  width:21px;
+  height:21px;
+  accent-color:#18d66b;
+}
+
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.field{
+  margin-top:12px;
+}
+
+.field label{
+  display:block;
+  color:#8c97b5;
+  font-size:12px;
+  margin-bottom:7px;
+}
+
+.field input,
+.field select{
+  width:100%;
+  padding:13px;
+  border-radius:12px;
+  border:1px solid #2a3b67;
+  background:#070d24;
+  color:white;
+  outline:none;
+}
+
+.actions{
+  position:sticky;
+  bottom:0;
+  margin-top:15px;
+  padding:14px;
+  background:#020615f2;
+  border-top:1px solid #26345a;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.btn{
+  padding:14px;
+  border-radius:15px;
+  font-weight:900;
+  font-size:15px;
+  cursor:pointer;
+  background:transparent;
+}
+
+.cancel{
+  border:2px solid var(--red);
+  color:#ff5a68;
+}
+
+.create{
+  border:2px solid #11a94f;
+  color:#35e97e;
+}
+
+.result{
+  display:none;
+  margin:14px;
+  padding:17px;
+  border:1px solid #1d8b51;
+  border-radius:18px;
+  background:#03160e;
+}
+
+.result pre{
+  white-space:pre-wrap;
+  word-break:break-all;
+  background:#020b08;
+  padding:12px;
+  border-radius:12px;
+  color:#b8ffd3;
+  font-size:11px;
+  direction:ltr;
+  text-align:left;
+}
+
+.copy{
+  width:100%;
+  padding:12px;
+  border:1px solid #198bff;
+  color:#5eafff;
+  background:#06152e;
+  border-radius:12px;
+  font-weight:800;
+}
+
+@media(max-width:520px){
+  .grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .row{
+    grid-template-columns:1fr;
+  }
+
+  .brand{
+    font-size:21px;
+  }
+
+  .card{
+    margin:10px;
+    padding:14px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="wrap">
 
-    <div class="header">
-        <div class="logo">ARSHIYA <span>VLESS</span></div>
-        <div class="subtitle">VLESS CONFIG PANEL</div>
-    </div>
+<div class="top">
 
-    <div class="card">
+<header class="header">
 
-        <div class="title">ساخت کانفیگ VLESS</div>
+<div>
+<div class="brand">𝐀𝐑𝐒𝐇𝐈𝐘𝐀</div>
+<div class="sub">V2RAY • SERVER PANEL</div>
+</div>
 
-        <label>آدرس سرور</label>
-        <input id="address" type="text" placeholder="example.com">
+<div class="status">
+<i class="dot"></i>
+آنلاین
+</div>
 
-        <label>پورت</label>
-        <input id="port" type="number" value="443">
+</header>
 
-        <label>UUID</label>
-        <input id="uuid" type="text" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
 
-        <label>نوع شبکه</label>
-        <select id="network">
-            <option value="tcp">TCP</option>
-            <option value="ws">WebSocket</option>
-            <option value="grpc">gRPC</option>
-        </select>
+<nav class="tabs">
 
-        <label>امنیت</label>
-        <select id="security">
-            <option value="tls">TLS</option>
-            <option value="none">None</option>
-        </select>
+<div class="tab active" onclick="showTab(0)">
+مشخصات
+</div>
 
-        <label>نام کانفیگ</label>
-        <input id="name" type="text" value="ARSHIYA VLESS">
+<div class="tab" onclick="showTab(1)">
+پورت و IP
+</div>
 
-        <button class="generate" onclick="generateConfig()">
-            ⚡ تولید کانفیگ
-        </button>
+<div class="tab" onclick="showTab(2)">
+پروتکل
+</div>
 
-        <div class="result" id="result">
+</nav>
 
-            <label>کانفیگ ساخته شده</label>
 
-            <textarea id="output" readonly></textarea>
+<section class="card tabpage">
 
-            <button class="copy" onclick="copyConfig()">
-                📋 کپی کانفیگ
-            </button>
+<div class="title">
+<span>●</span>
+پروتکل‌های اتصال (حداقل یک مورد الزامی است)
+</div>
 
-            <div class="status" id="status"></div>
+<div class="protocol">
 
-        </div>
+<label class="proto active">
 
-    </div>
+<div>
+<b>VLESS</b>
+<small>پروتکل سبک و پرسرعت</small>
+</div>
 
-    <div class="footer">
-        ARSHIYA VLESS PANEL
-    </div>
+<input class="check" type="checkbox" checked>
+
+</label>
+
+
+<label class="proto">
+
+<div>
+<b>Trojan</b>
+<small>پروتکل امن و پیشرفته</small>
+</div>
+
+<input class="check" type="checkbox">
+
+</label>
+
+
+<label class="proto">
+
+<div>
+<b>Shadowsocks</b>
+<small>پروتکل امن سبک</small>
+</div>
+
+<input class="check" type="checkbox">
+
+</label>
 
 </div>
 
+
+<div class="field">
+
+<label>
+نام کاربری
+</label>
+
+<input id="name" value="ARSHIYA">
+
+</div>
+
+
+<div class="row">
+
+<div class="field">
+
+<label>
+حجم مجاز (GB)
+</label>
+
+<input id="volume" placeholder="نامحدود">
+
+</div>
+
+
+<div class="field">
+
+<label>
+زمان اعتبار (روز)
+</label>
+
+<input id="days" placeholder="نامحدود">
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="card tabpage">
+
+<div class="title">
+<span>●</span>
+پورت‌های اتصال VLESS
+</div>
+
+
+<div class="ports">
+
+<div class="port-title">
+● TLS PORT (رمزنگاری شده)
+</div>
+
+<div class="grid">
+
+<button class="port selected" data-port="443">
+443
+</button>
+
+<button class="port" data-port="2053">
+2053
+</button>
+
+<button class="port" data-port="2083">
+2083
+</button>
+
+<button class="port" data-port="2087">
+2087
+</button>
+
+<button class="port" data-port="2096">
+2096
+</button>
+
+<button class="port" data-port="8443">
+8443
+</button>
+
+</div>
+
+</div>
+
+
+<div class="ports">
+
+<div class="port-title" style="color:#f0a322">
+● Non-TLS PORT (بدون رمزنگاری)
+</div>
+
+<div class="grid">
+
+<button class="port" data-port="80">
+80
+</button>
+
+<button class="port" data-port="8080">
+8080
+</button>
+
+<button class="port" data-port="8880">
+8880
+</button>
+
+<button class="port" data-port="2052">
+2052
+</button>
+
+<button class="port" data-port="2082">
+2082
+</button>
+
+<button class="port" data-port="2086">
+2086
+</button>
+
+<button class="port" data-port="2095">
+2095
+</button>
+
+</div>
+
+</div>
+
+
+<div class="ports">
+
+<div class="port-title" style="color:#25dfb0">
+● پورت‌های دلخواه و سفارشی
+</div>
+
+<input
+id="customPorts"
+class="custom"
+placeholder="مثال: 5000 8443 2096"
+>
+
+</div>
+
+
+<div class="ports">
+
+<div class="port-title" style="color:#5cdcff">
+● سرور
+</div>
+
+<select id="server" class="custom">
+
+<option value="Germany">
+آلمان
+</option>
+
+<option value="Turkey">
+ترکیه
+</option>
+
+<option value="UAE">
+امارات
+</option>
+
+<option value="Qatar">
+قطر
+</option>
+
+<option value="Iran">
+ایران
+</option>
+
+</select>
+
+</div>
+
+</section>
+
+
+<section class="card tabpage">
+
+<div class="title">
+<span>●</span>
+اطلاعات سرور
+</div>
+
+
+<div class="field">
+
+<label>
+دامنه / IP سرور
+</label>
+
+<input
+id="host"
+placeholder="example.com یا IP سرور"
+>
+
+</div>
+
+
+<div class="row">
+
+<div class="field">
+
+<label>
+SNI
+</label>
+
+<input
+id="sni"
+placeholder="example.com"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+UUID
+</label>
+
+<input
+id="uuid"
+value="auto-generate"
+>
+
+</div>
+
+</div>
+
+</section>
+
+
+<div class="actions">
+
+<button
+class="btn cancel"
+onclick="resetPanel()"
+>
+انصراف
+</button>
+
+<button
+class="btn create"
+onclick="createConfig()"
+>
+✓ ایجاد کاربر
+</button>
+
+</div>
+
+</div>
+
+
+<div class="result" id="result">
+
+<div class="title">
+کانفیگ ARSHIYA آماده شد
+</div>
+
+<pre id="output"></pre>
+
+<button
+class="copy"
+onclick="copyConfig()"
+>
+کپی کانفیگ
+</button>
+
+</div>
+
+</div>
+
+
 <script>
 
-function generateConfig(){
+const tabs=[
+  ...document.querySelectorAll('.tab')
+];
 
-    const address = document.getElementById("address").value.trim();
-    const port = document.getElementById("port").value.trim();
-    const uuid = document.getElementById("uuid").value.trim();
-    const network = document.getElementById("network").value;
-    const security = document.getElementById("security").value;
-    const name = document.getElementById("name").value.trim();
+const pages=[
+  ...document.querySelectorAll('.tabpage')
+];
 
-    if(!address || !port || !uuid){
 
-        alert("لطفاً آدرس سرور، پورت و UUID را وارد کنید.");
-        return;
-    }
+function showTab(i){
 
-    let params = new URLSearchParams();
+  tabs.forEach(
+    (x,n)=>
+    x.classList.toggle(
+      'active',
+      n===i
+    )
+  );
 
-    params.set("type", network);
-    params.set("security", security);
+  pages.forEach(
+    (x,n)=>
+    x.style.display=
+    n===i ? 'block' : 'none'
+  );
 
-    if(network === "ws"){
-        params.set("path","/");
-    }
-
-    if(network === "grpc"){
-        params.set("serviceName","vless");
-    }
-
-    const encodedName = encodeURIComponent(name || "ARSHIYA VLESS");
-
-    const config =
-        "vless://" +
-        uuid +
-        "@" +
-        address +
-        ":" +
-        port +
-        "?" +
-        params.toString() +
-        "#" +
-        encodedName;
-
-    document.getElementById("output").value = config;
-    document.getElementById("result").style.display = "block";
-    document.getElementById("status").textContent = "کانفیگ با موفقیت ساخته شد";
 }
+
+
+showTab(0);
+
+
+document
+.querySelectorAll('.port')
+.forEach(
+  b=>
+  b.onclick=()=>{
+
+    document
+    .querySelectorAll('.port')
+    .forEach(
+      x=>x.classList.remove('selected')
+    );
+
+    b.classList.add('selected');
+
+  }
+);
+
+
+function createConfig(){
+
+  const host=
+    document
+    .getElementById('host')
+    .value
+    .trim()
+    ||
+    'SERVER-IP-OR-DOMAIN';
+
+
+  const port=
+    document
+    .querySelector('.port.selected')
+    ?.dataset.port
+    ||
+    '443';
+
+
+  const name=
+    document
+    .getElementById('name')
+    .value
+    ||
+    'ARSHIYA';
+
+
+  const server=
+    document
+    .getElementById('server')
+    .value;
+
+
+  const sni=
+    document
+    .getElementById('sni')
+    .value
+    .trim()
+    ||
+    host;
+
+
+  const uuid=
+    document
+    .getElementById('uuid')
+    .value
+    ===
+    'auto-generate'
+    ?
+    crypto.randomUUID()
+    :
+    document
+    .getElementById('uuid')
+    .value;
+
+
+  const cfg=
+`# ARSHIYA
+# Server: ${server}
+# User: ${name}
+# Port: ${port}
+# SNI: ${sni}
+
+vless://${uuid}@${host}:${port}?encryption=none&security=${port==='443'?'tls':'none'}&type=tcp&sni=${encodeURIComponent(sni)}#ARSHIYA-${server}`;
+
+
+  document
+  .getElementById('output')
+  .textContent=cfg;
+
+
+  document
+  .getElementById('result')
+  .style.display='block';
+
+
+  document
+  .getElementById('result')
+  .scrollIntoView({
+    behavior:'smooth'
+  });
+
+}
+
 
 function copyConfig(){
 
-    const output = document.getElementById("output");
+  navigator.clipboard.writeText(
+    document
+    .getElementById('output')
+    .textContent
+  );
 
-    navigator.clipboard.writeText(output.value)
-    .then(function(){
+  alert('کانفیگ کپی شد');
 
-        document.getElementById("status").textContent =
-            "✅ کانفیگ کپی شد";
+}
 
-    })
-    .catch(function(){
 
-        output.select();
-        document.execCommand("copy");
+function resetPanel(){
 
-        document.getElementById("status").textContent =
-            "✅ کانفیگ کپی شد";
-    });
+  document
+  .getElementById('result')
+  .style.display='none';
+
+  window.scrollTo({
+    top:0,
+    behavior:'smooth'
+  });
+
 }
 
 </script>
