@@ -1,1 +1,289 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARSHIYA VLESS PANEL</title>
 
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Tahoma,Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:#080808;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    padding:25px 12px;
+}
+
+.container{
+    width:100%;
+    max-width:480px;
+}
+
+.header{
+    text-align:center;
+    padding:25px 10px;
+}
+
+.logo{
+    font-size:32px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.logo span{
+    color:#d4af37;
+}
+
+.subtitle{
+    margin-top:8px;
+    color:#999;
+    font-size:13px;
+}
+
+.card{
+    background:#111;
+    border:1px solid #292929;
+    border-radius:18px;
+    padding:20px;
+    box-shadow:0 0 30px rgba(212,175,55,.08);
+}
+
+.title{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:18px;
+    color:#d4af37;
+}
+
+label{
+    display:block;
+    margin:12px 0 7px;
+    color:#bbb;
+    font-size:13px;
+}
+
+input,select{
+    width:100%;
+    padding:13px;
+    border-radius:10px;
+    border:1px solid #333;
+    background:#080808;
+    color:#fff;
+    outline:none;
+    font-size:14px;
+}
+
+input:focus,select:focus{
+    border-color:#d4af37;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    margin-top:15px;
+    border:0;
+    border-radius:11px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:bold;
+}
+
+.generate{
+    background:#d4af37;
+    color:#000;
+}
+
+.generate:hover{
+    background:#f0d36b;
+}
+
+.copy{
+    background:#222;
+    color:#fff;
+    border:1px solid #333;
+}
+
+.copy:hover{
+    border-color:#d4af37;
+}
+
+.result{
+    display:none;
+    margin-top:20px;
+}
+
+textarea{
+    width:100%;
+    min-height:130px;
+    resize:none;
+    padding:13px;
+    border-radius:10px;
+    border:1px solid #333;
+    background:#050505;
+    color:#ddd;
+    direction:ltr;
+    font-size:12px;
+}
+
+.status{
+    text-align:center;
+    margin-top:12px;
+    color:#777;
+    font-size:12px;
+}
+
+.footer{
+    text-align:center;
+    color:#555;
+    font-size:11px;
+    margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <div class="logo">ARSHIYA <span>VLESS</span></div>
+        <div class="subtitle">VLESS CONFIG PANEL</div>
+    </div>
+
+    <div class="card">
+
+        <div class="title">ساخت کانفیگ VLESS</div>
+
+        <label>آدرس سرور</label>
+        <input id="address" type="text" placeholder="example.com">
+
+        <label>پورت</label>
+        <input id="port" type="number" value="443">
+
+        <label>UUID</label>
+        <input id="uuid" type="text" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
+
+        <label>نوع شبکه</label>
+        <select id="network">
+            <option value="tcp">TCP</option>
+            <option value="ws">WebSocket</option>
+            <option value="grpc">gRPC</option>
+        </select>
+
+        <label>امنیت</label>
+        <select id="security">
+            <option value="tls">TLS</option>
+            <option value="none">None</option>
+        </select>
+
+        <label>نام کانفیگ</label>
+        <input id="name" type="text" value="ARSHIYA VLESS">
+
+        <button class="generate" onclick="generateConfig()">
+            ⚡ تولید کانفیگ
+        </button>
+
+        <div class="result" id="result">
+
+            <label>کانفیگ ساخته شده</label>
+
+            <textarea id="output" readonly></textarea>
+
+            <button class="copy" onclick="copyConfig()">
+                📋 کپی کانفیگ
+            </button>
+
+            <div class="status" id="status"></div>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        ARSHIYA VLESS PANEL
+    </div>
+
+</div>
+
+<script>
+
+function generateConfig(){
+
+    const address = document.getElementById("address").value.trim();
+    const port = document.getElementById("port").value.trim();
+    const uuid = document.getElementById("uuid").value.trim();
+    const network = document.getElementById("network").value;
+    const security = document.getElementById("security").value;
+    const name = document.getElementById("name").value.trim();
+
+    if(!address || !port || !uuid){
+
+        alert("لطفاً آدرس سرور، پورت و UUID را وارد کنید.");
+        return;
+    }
+
+    let params = new URLSearchParams();
+
+    params.set("type", network);
+    params.set("security", security);
+
+    if(network === "ws"){
+        params.set("path","/");
+    }
+
+    if(network === "grpc"){
+        params.set("serviceName","vless");
+    }
+
+    const encodedName = encodeURIComponent(name || "ARSHIYA VLESS");
+
+    const config =
+        "vless://" +
+        uuid +
+        "@" +
+        address +
+        ":" +
+        port +
+        "?" +
+        params.toString() +
+        "#" +
+        encodedName;
+
+    document.getElementById("output").value = config;
+    document.getElementById("result").style.display = "block";
+    document.getElementById("status").textContent = "کانفیگ با موفقیت ساخته شد";
+}
+
+function copyConfig(){
+
+    const output = document.getElementById("output");
+
+    navigator.clipboard.writeText(output.value)
+    .then(function(){
+
+        document.getElementById("status").textContent =
+            "✅ کانفیگ کپی شد";
+
+    })
+    .catch(function(){
+
+        output.select();
+        document.execCommand("copy");
+
+        document.getElementById("status").textContent =
+            "✅ کانفیگ کپی شد";
+    });
+}
+
+</script>
+
+</body>
+</html>
